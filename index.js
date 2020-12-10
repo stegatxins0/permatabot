@@ -18,6 +18,8 @@ client.on('message', message =>{
  
     if(command === 'ping'){
         client.commands.get('ping').execute(message, args);
+    } else if(command === 'add'){
+        client.commands.get('add').execute(message, args);
     } 
 });
 
