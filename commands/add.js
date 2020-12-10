@@ -13,7 +13,7 @@ module.exports = {
             } else {
                 rm_time.pop(i);       
             }
-        message.channel.send(rm_time + "\n" + rm_role + "\n" + rm_message);
+        message.channel.send(rm_time + "\n" + rm_role + "\n" + rm_msg);
         } 
         // const rm_role = message.mentions.users.first()
         // let rm_time = args[0]
