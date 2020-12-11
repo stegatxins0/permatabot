@@ -31,4 +31,4 @@ client.on("ready", function (){
     console.log(`${client.user.username} Is Online!`);
 });
 
-client.login('Nzg2NDcwNzQ5MzA5MTA4MjI0.X9G39g.Qw3rVDEu1LsP_81_Dn_pcajNLOw');
+client.login(process.env.token);
