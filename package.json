@@ -9,6 +9,9 @@
   "author": "Jack",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^12.5.1"
+    "discord.js": "^12.5.1",
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.32",
+    "sqlite3": "^5.0.0"
   }
 }

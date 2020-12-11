@@ -1,10 +1,12 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const prefix = '!';
+const prefix = '.';
 const fs = require('fs');
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
-
+//const moment = require("moment");
+const moment = require("moment-timezone");
+moment.tz.setDefault();
 for (const file of commandFiles){
     const command = require(`./commands/${file}`);
     client.commands.set(command.name, command);
@@ -20,11 +22,13 @@ client.on('message', message =>{
         client.commands.get('ping').execute(message, args);
     } else if(command === 'add'){
         client.commands.get('add').execute(message, args);
-    } 
+    } else if(command === 'list'){
+        client.commands.get('list').execute(message, args)
+    }
 });
 
 client.on("ready", function (){
     console.log(`${client.user.username} Is Online!`);
 });
 
-client.login(process.env.token);
+client.login('Nzg2NDcwNzQ5MzA5MTA4MjI0.X9G39g.Qw3rVDEu1LsP_81_Dn_pcajNLOw');
