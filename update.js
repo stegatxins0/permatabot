@@ -1,5 +1,5 @@
 const sqlite3 = require('sqlite3')
-db = new sqlite3.Database('./db/assignment.db')
+db = new sqlite3.Database('./assignment.db')
 module.exports = {
     sort_date :function sort_date(table){
         db.run(`SELECT * FROM ${table} ORDER BY datetime(time) DESC Limit 1`)
