@@ -26,8 +26,13 @@ module.exports = {
             }
         }
         function rm_parse(args){
-            rm_time = rm_cmd.substr(0,rm_cmd.indexOf("<")).trim();
-            rm_message = rm_cmd.substr(rm_cmd.lastIndexOf(">")+1).trim();
+            if(everyones == true){
+                rm_time = rm_cmd.substr(0,rm_cmd.indexOf("@")).trim();
+                rm_message = rm_cmd.substr(rm_cmd.indexOf("@")+9).trim();
+            }else{
+                rm_time = rm_cmd.substr(0,rm_cmd.indexOf("<")).trim();
+                rm_message = rm_cmd.substr(rm_cmd.lastIndexOf(">")+1).trim();
+            }
             rm_time = moment(rm_time).format("YYYY-MM-DD HH:mm");
             validcheck = moment(rm_time, "YYYY-MM-DD HH:mm").isValid()
             if (validcheck != true){
@@ -49,7 +54,7 @@ module.exports = {
                     memberlist.push(user.user.id);
                 });
             } else if (rm_cmd.includes("@everyone")) {
-                console.log('yay')
+                everyones = true
                 message.guild.members.cache.forEach(user => {
                     memberlist.push(user.user.id);
                 });
@@ -61,7 +66,8 @@ module.exports = {
         }
         if(!args[0] || !args[1] || !args[2]){message.reply(helpmsg)}
         else{
-            add_to_role(rm_parse(args), rm_member(message))
+            mbrfst = rm_member(message)
+            add_to_role(rm_parse(args), mbrfst)
             await delay(3000)
             message.reply("Done. 🙂")
         }  
