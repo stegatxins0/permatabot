@@ -13,10 +13,11 @@ module.exports = {
             .setDescription(this.description)
             .addField("Format", this.format)
             .addFields(
-                { name: "Time", value: `Time currently only support the format **12 Dec 2020 23:59**. If time is not mentioned it will default to 0000. If year is not mentioned it will default to 1970?.`},
-                { name: "Ping", value: `*@2k1 or @aqil*. You can only ping one user or role. The assignment will be added to all of the members of pinged role. Do not ping @everyone or @here`},
+                { name: "Time", value: `Time currently only support the format **12 Dec 2020 23:59**. If time is not mentioned it will default to 1200. If year is not mentioned it will default to 1970?.`},
+                { name: "Ping", value: `*@2k1 or @aqil*. You can only ping one user or role. The assignment will be added to all of the members of pinged role. Do not ping @here`},
                 { name: "Assignment", value: `Insert any text you want. Do not use weird symbol such as <, # or @`}
                 )
+        rm_cmd = args.join(" ")
         function add_to_role(list, member){
             if(list){
             for (role in member){
@@ -25,7 +26,6 @@ module.exports = {
             }
         }
         function rm_parse(args){
-            rm_cmd = args.join(" ")
             rm_time = rm_cmd.substr(0,rm_cmd.indexOf("<")).trim();
             rm_message = rm_cmd.substr(rm_cmd.lastIndexOf(">")+1).trim();
             rm_time = moment(rm_time).format("YYYY-MM-DD HH:mm");
@@ -45,9 +45,13 @@ module.exports = {
             if (message.mentions.members.first()) {
                 memberlist.push(message.mentions.members.first().id)
             } else if (message.mentions.roles.first()) {
-                let roleID = message.mentions.roles.first().id;
                 role.members.forEach(user => {
-                memberlist.push(user.user.id);
+                    memberlist.push(user.user.id);
+                });
+            } else if (rm_cmd.includes("@everyone")) {
+                console.log('yay')
+                message.guild.members.cache.forEach(user => {
+                    memberlist.push(user.user.id);
                 });
             } else {
                 message.reply(helpmsg);
