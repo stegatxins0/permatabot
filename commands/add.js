@@ -13,7 +13,7 @@ module.exports = {
             .setDescription(this.description)
             .addField("Format", this.format)
             .addFields(
-                { name: "Time", value: `Time currently only support the format **12 Dec 2020 23:59**. If time is not mentioned it will default to 1200. If year is not mentioned it will default to 1970?.`},
+                { name: "Time", value: `Time currently only support the format **12 Dec 2020 23:59**. If time is not mentioned it will default to 0000. If year is not mentioned it will default to 1970?.`},
                 { name: "Ping", value: `*@2k1 or @aqil*. You can only ping one user or role. The assignment will be added to all of the members of pinged role. Do not ping @everyone or @here`},
                 { name: "Assignment", value: `Insert any text you want. Do not use weird symbol such as <, # or @`}
                 )
