@@ -7,6 +7,7 @@ module.exports = {
     format: '*add time @user/role assignment*',
     description: "Please follow the format. DO NOT USE COMMAND THAT DOESN'T FOLLOW THIS FORMAT OR THE BOT WILL CRASH",
     async execute(message, args, Discord){
+        everyones = false
         const helpmsg = new Discord.MessageEmbed()
             .setColor('#7FE5F0')
             .setTitle("ADD ASSIGNMENT")
@@ -14,7 +15,7 @@ module.exports = {
             .addField("Format", this.format)
             .addFields(
                 { name: "Time", value: `Time currently only support the format **12 Dec 2020 23:59**. If time is not mentioned it will default to 1200. If year is not mentioned it will default to 1970?.`},
-                { name: "Ping", value: `*@2k1 or @aqil*. You can only ping one user or role. The assignment will be added to all of the members of pinged role. Do not ping @here`},
+                { name: "Ping", value: `*@2k1 or @aqil*. You can only ping one user or role. The assignment will be added to all **ONLINE MEMBERS** of pinged role only. Do not ping @here`},
                 { name: "Assignment", value: `Insert any text you want. Do not use weird symbol such as <, # or @`}
                 )
         rm_cmd = args.join(" ")
