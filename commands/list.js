@@ -26,7 +26,7 @@ module.exports = {
                     msg.awaitReactions((reaction, user) => user.id == mbrid, { max: 1 }).then(collected => {
                         // console.log(`${username} \n ${list.time} \n ${list.assignment}`)
                         sq.sq_delete(username, list.time, list.assignment)
-                        message.channel.bulkDelete(99).then(veryuglycode())
+                        client.channels.cache.get(config.reminders.assignmentchannel).bulkDelete(99).then(veryuglycode())
                     })
             })
         }
@@ -43,6 +43,6 @@ module.exports = {
                 await delay(5000)
             }
     }
-    message.channel.bulkDelete(99).then(veryuglycode())
+    client.channels.cache.get(config.reminders.assignmentchannel).bulkDelete(99).then(veryuglycode())
 }   
 }
