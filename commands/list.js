@@ -7,7 +7,7 @@ module.exports = {
     execute(message, client, config){
         function callparse(username) {
             let mbrid = username.substr(4)
-            message.channel.send(`<@${mbrid}>`)
+            client.channels.cache.get(config.reminders.assignmentchannel).send(`<@${mbrid}>`)
             sq.sq_get(username, async function(list){
                 var dtame = moment(list.time, 'YYYY-MM-DD hh:mm')
                 if (dtame.diff(moment(), 'hours') < 24 && list.checkremind != 24 && list.check !=3){
@@ -21,7 +21,7 @@ module.exports = {
                     client.channels.cache.get(config.reminders.remindchannel).send(`*<@${mbrid}>, **REMOVING ${list.assignment}**: Prepare an excuse if you haven't done ${list.assignment} which was due at ${list.time}`)
                 }
                 var friendlydate = dtame.fromNow();
-                let msg = await message.channel.send(`**${friendlydate}** | *${list.time}* ➤ ${list.assignment}`) 
+                let msg = await client.channels.cache.get(config.reminders.assignmentchannel).send(`**${friendlydate}** | *${list.time}* ➤ ${list.assignment}`) 
                 // msg.awaitReactions((reaction, user) => user.id == mbrid).then(collected => {
                     msg.awaitReactions((reaction, user) => user.id == mbrid, { max: 1 }).then(collected => {
                         // console.log(`${username} \n ${list.time} \n ${list.assignment}`)

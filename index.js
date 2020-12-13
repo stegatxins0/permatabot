@@ -42,5 +42,5 @@ client.on('message', message =>{
 client.on("ready", function (){
     console.log(`${client.user.username} Is Online!`);
 });
-
-client.login(process.env.token);
+client.login("Nzg2NDcwNzQ5MzA5MTA4MjI0.X9G39g.wtw6aI6r27s41q7womerPlhVLqk");
+// client.login(process.env.token);
