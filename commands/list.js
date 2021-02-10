@@ -14,14 +14,18 @@ module.exports = {
                         console.log(err);
                         message.channel.send("Who are you again?")
                     }else{
-                        callback(rows);
+                        callback(rows, table);
                     }
                 });
             });
         }
-        function callparse(list){
+        function callparse(list, table){
             // friendlydate = list.time.fromNow();
-            message.channel.send(`**${moment(list.time, 'YYYY-MM-DD hh:mm').fromNow()}** | *${list.time}* ➤ ${list.assignment}`) 
+            if (moment(list.time, 'YYYY-MM-DD hh:mm').diff(moment()) < 0){
+                db.run(`DELETE FROM '${table}' WHERE time='${list.time}' AND assignment='${list.assignment}'`);
+            }else{
+                message.channel.send(`**${moment(list.time, 'YYYY-MM-DD hh:mm').fromNow()}** | *${list.time}* ➤ ${list.assignment}`)
+            }
         }
         if (user){sq_get(user, callparse)}else{message.channel.send("Please insert username as argument, eg: .list thisismyname")}
     }

@@ -18,8 +18,8 @@ for(const file of commandFiles){
 client.once('ready', () => {
     console.log('bot is online!');
 });
- 
 client.on('message', message =>{
+    client.user.setActivity("Stop procrastinating!");
     if(!message.content.startsWith(prefix)) return;
  
     const args = message.content.slice(prefix.length).split(/ +/);
@@ -42,4 +42,4 @@ client.on('message', message =>{
     } 
 });
  
-client.login("");
+client.login(process.env.token);
