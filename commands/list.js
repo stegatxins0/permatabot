@@ -1,48 +1,32 @@
-const moment = require("moment");
-const sq = require("../update");
-const delay = ms => new Promise(res => setTimeout(res, ms));
+// const sqlite3 = require('sqlite3')
+const sqlite3 = require('sqlite3')
+db = new sqlite3.Database('./assignment.db')
+const moment = require('moment')
 module.exports = {
     name: 'list',
-    description: "this is a list commmand",
-    execute(message, client, config){
-        function callparse(username) {
-            let mbrid = username.substr(4)
-            client.channels.cache.get(config.reminders.assignmentchannel).send(`<@${mbrid}>`)
-            sq.sq_get(username, async function(list){
-                var dtame = moment(list.time, 'YYYY-MM-DD hh:mm')
-                if (dtame.diff(moment(), 'hours') < 24 && list.checkremind != 24 && list.check !=3){
-                    sq.sq_update(username, list.time, list.assignment, 24)
-                    client.channels.cache.get(config.reminders.remindchannel).send(`*<@${mbrid}>, *1 DAY LEFT WARNING**: Your assignment ${list.assignment} is due at ${list.time}`)
-                }else if (dtame.diff(moment(), 'hours') < 3 && list.checkremind !=3){
-                    sq.sq_update(username, list.time, list.assignment, 3)
-                    client.channels.cache.get(config.reminders.remindchannel).send(`*<@${mbrid}>, **FINAL WARNING**: Your assignment ${list.assignment} is due at ${list.time}`)
-                }else if (dtame.diff(moment()) < 0){
-                    sq.sq_delete(username, list.time, list.assignment)
-                    client.channels.cache.get(config.reminders.remindchannel).send(`*<@${mbrid}>, **REMOVING ${list.assignment}**: Prepare an excuse if you haven't done ${list.assignment} which was due at ${list.time}`)
-                }
-                var friendlydate = dtame.fromNow();
-                let msg = await client.channels.cache.get(config.reminders.assignmentchannel).send(`**${friendlydate}** | *${list.time}* ➤ ${list.assignment}`) 
-                // msg.awaitReactions((reaction, user) => user.id == mbrid).then(collected => {
-                    msg.awaitReactions((reaction, user) => user.id == mbrid, { max: 1 }).then(collected => {
-                        // console.log(`${username} \n ${list.time} \n ${list.assignment}`)
-                        sq.sq_delete(username, list.time, list.assignment)
-                        client.channels.cache.get(config.reminders.assignmentchannel).bulkDelete(99).then(veryuglycode())
-                    })
-            })
+    description: "list assignment with .list *user*",
+    execute(message, args){
+        user = args[0];
+        function sq_get(table, callback){
+            db.serialize(() => {
+                db.each(`SELECT * FROM ${table} ORDER BY time`,function(err,rows){
+                    if (err){
+                        console.log(err);
+                        message.channel.send("Who are you again?")
+                    }else{
+                        callback(rows, table);
+                    }
+                });
+            });
         }
-        async function veryuglycode(){
-            tablist = []
-            function psh(name){
-                tablist.push(name);
+        function callparse(list, table){
+            // friendlydate = list.time.fromNow();
+            if (moment(list.time, 'YYYY-MM-DD hh:mm').diff(moment()) < 0){
+                db.run(`DELETE FROM '${table}' WHERE time='${list.time}' AND assignment='${list.assignment}'`);
+            }else{
+                message.channel.send(`**${moment(list.time, 'YYYY-MM-DD hh:mm').fromNow()}** | *${list.time}* ➤ ${list.assignment}`)
             }
-            sq.sq_get_table(psh)
-            await delay(5000);
-            console.log(tablist)
-            for (mbr in tablist){
-                callparse(tablist[mbr])
-                await delay(5000)
-            }
+        }
+        if (user){sq_get(user, callparse)}else{message.channel.send("Please insert username as argument, eg: .list thisismyname")}
     }
-    client.channels.cache.get(config.reminders.assignmentchannel).bulkDelete(99).then(veryuglycode())
-}   
 }
