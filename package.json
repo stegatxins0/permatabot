@@ -1,7 +1,6 @@
 {
   "name": "permatabot",
   "version": "1.0.0",
-  "description": "I'm the supreme leader of Permata",
   "description": "Discord bot that remind you your assignment deadline",
   "main": "main.js",
   "scripts": {
@@ -11,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.32",
     "sqlite3": "^5.0.0"
