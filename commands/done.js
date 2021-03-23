@@ -8,7 +8,7 @@ module.exports = {
             db.serialize(() => {
                 db.each(`SELECT COUNT(*) from ${table}`,function(err,rows){
                     if (err){
-                        message.channel.send("No assignment found")
+                        message.channel.send("`No assignment found`")
                     }else{
                         ttl = rows["COUNT(*)"];
                     }
@@ -22,7 +22,7 @@ module.exports = {
                 db.each(`SELECT rowid,* FROM ${table} ORDER BY time`,function(err,rows){
                     if (err){
                         console.log(err);
-                        message.channel.send("`ERROR: LIST SQLITE ERROR` Please contact developer")
+                        // message.channel.send("`ERROR: LIST SQLITE ERROR` Please contact developer")
                     }else{
                         callback(rows, table);
                     }

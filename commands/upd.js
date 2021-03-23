@@ -53,7 +53,7 @@ module.exports = {
                 sq_get(table, msd, list.rowid)
             }
         }
-        db.each(`SELECT name FROM sqlite_master WHERE type ='table' AND name NOT LIKE 'sqlite_%';`,function(err, rows){
+        db.each(`SELECT name FROM sqlite_master WHERE type ='table' AND name NOT LIKE 'sqlite_%' AND name NOT LIKE 'completed_%' ;`,function(err, rows){
             if (err){
                 console.log(err);
                 // message.reply("`ERROR: SQLITE ERROR` Please contact developer")
@@ -61,6 +61,7 @@ module.exports = {
                 // db.run(`INSERT INTO ${username} (time, assignment, details) VALUES (?, ?, ?)`, masterlist);
                 // console.log(rows.name)
                 // console.log(rows["name"])
+                // if (!rows.name.startsWith(""))
                 sq_get(rows.name, callparse)
             }
         })
