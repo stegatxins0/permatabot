@@ -1,6 +1,6 @@
 ## Note
 
-This repository is no longer maintained and there is a lot of bugs in it. 
+This bot is unusable right now. There is a lot of bugs in it and this repository is no longer maintained. 
 
 # Permatabot
 
